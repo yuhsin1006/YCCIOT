@@ -1,7 +1,7 @@
 var http = require('http');
-//var express = require('express');
-//var app = express();
-//var bodyParser = require('body-parser');
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
 //var jsonParser = bodyParser.json();
 
 var options = {
@@ -15,7 +15,7 @@ var options = {
 
 };
 
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 callback = function(response) {
 
@@ -27,10 +27,10 @@ callback = function(response) {
   });
 
   response.on('end', function () {
-        //console.dir(str);
-     var obj = JSON.parse(str);
-        //console.dir(obj);
-     //console.log(obj);
+        console.dir(str);
+//     var obj = JSON.parse(str);
+       // console.dir(obj);
+     console.log(str);
   });
 
 }
