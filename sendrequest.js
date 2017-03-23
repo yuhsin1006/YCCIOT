@@ -1,3 +1,4 @@
+
 var http = require('http');
 var express = require('express');
 var app = express();
@@ -17,8 +18,7 @@ var options = {
 
 app.use(bodyParser.json());
 
-callback = function(response) {
-
+var req = http.request(options, function(response){
   var str = '';
 
   response.on('data', function (chunk) {
@@ -28,14 +28,34 @@ callback = function(response) {
 
   response.on('end', function () {
         console.dir(str);
-//     var obj = JSON.parse(str);
-       // console.dir(obj);
-     console.log(str);
   });
 
+});
+
+var request = require('require')
+
+request
+    .get('http://120.107.172.236:3000/devices')
+    .on('response', function(response) {
+      console.log(response.statusCode)
+      console.log(response.headers['content-type'])
+      console.dir(response.toJSON())
+    })
+    ;
+
+module.exports.getToken = function(callback){
+
+    request(validLoginRequest, function(err,resp,body){
+        var token ;
+        var json = JSON.parse(JSON.stringify(body));
+        console.log("from request(): token=" + json.accesstoken);
+        token = json.accesstoken;
+
+        console.log("getToken() returns:" + token);
+        callback(token);
+    });
 }
 
-var req = http.request(options, callback);
-req.write("hello world");
+req.write('Hello World!');
 req.end();
 
