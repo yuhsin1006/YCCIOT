@@ -9,20 +9,19 @@ app.use(bodyParser.json());
 
 app.get('/',function(request, response){ //我們要處理URL為 "/" 的HTTP GET請求
 
-  response.on('data', function (chunk) {
-        console.log(chunk);
-        str += chunk;
-  });
-  response.on('end', function () {
-        console.dir(str);
-  });
-  console.log(request.body); 
-
+ console.log(request.body); 
+  /* response = {
+       first_name:req.query.first_name,
+       last_name:req.query.last_name
+   };
+   console.log(response);
+   res.end(JSON.stringify(response));
+*/
   response.end('你好！'); //作出回應
   
 });
 server.listen(3000, () => {
-    console.log('HTTP伺服器在 http://127.0.0.1:3000/ 上運行');
+    console.log('Listening on port 3000 ');
 });
 
 /*
