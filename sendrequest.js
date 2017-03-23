@@ -14,16 +14,18 @@ var options = {
       'Content-Type': 'application/json'
   }
 };
-/*
+
 app.use(bodyParser.json());
 
 var req = http.request(options, function(response) {
   var str = '';
-    var obj = {
-        name : 'Justin',
-        age : 35,
-    };
-    var json = JSON.stringify(obj);
+
+    var aaa = {
+        serial : '87',
+        mac : '12' ,
+        belongTo : 'yuhsin'
+    }
+    var json = JSON.stringify(aaa);
 
   response.setHeader('Content-Type', 'application/json');
   response.send(json);
@@ -38,7 +40,9 @@ var req = http.request(options, function(response) {
   });
 
 });
-*/
+req.end();
+
+/*
 
 var request = require('request');
 
@@ -50,20 +54,4 @@ request
       console.dir(response.toJSON())
     })
     
-    
-/*
-module.exports.getToken = function(callback){
-
-    request(validLoginRequest, function(err,resp,body){
-        var token ;
-        var json = JSON.parse(JSON.stringify(body));
-        console.log("from request(): token=" + json.accesstoken);
-        token = json.accesstoken;
-
-        console.log("getToken() returns:" + token);
-        callback(token);
-    });
-}
 */
-
-//req.end();
