@@ -19,15 +19,16 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 app.get('/',function(request, response){ //我們要處理URL為 "/" 的HTTP GET請求
-
+/*
   response.on('data', function (chunk) {
         console.log(chunk);
         str += chunk;
   });
   response.on('end', function () {
         console.dir(str);
-  });
-    
+  });*/
+  console.log(request.body); 
+  
   response.end('你好！'); //作出回應
   
 });
