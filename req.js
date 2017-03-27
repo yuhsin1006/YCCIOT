@@ -1,11 +1,7 @@
+//var postData = querystring.stringify({
+//  'msg' : 'Hello World!'
+//});
 var http = require('http');
-var express = require('express');
-var app = express();
-var querystring = require('querystring');
-
-var postData = querystring.stringify({
-  'msg' : 'Hello World!'
-});
 
 var options = {
   hostname: '120.107.172.236',
@@ -13,22 +9,18 @@ var options = {
   path: '/devices',
   method: 'POST',
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Content-Length': Buffer.byteLength(postData)
+    'Content-Type': 'application/json',
+   // 'Content-Length': Buffer.byteLength(postData)
+  },
+  body: {
+        serial : 87 ,
+        mac : 12,
+        belongTo : 'yuhsin'
   }
+
 };
 
 var req = http.request(options, (res) => {
-/*
-    var aaa = {
-        serial : '87',
-        mac : '12' ,
-        belongTo : 'yuhsin'
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(aaa));
-*/
   console.log(`STATUS: ${res.statusCode}`);
   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
   res.setEncoding('utf8');
@@ -45,5 +37,5 @@ req.on('error', (e) => {
 });
 
 // write data to request body
-req.write(postData);
+//req.write(postData);
 req.end();

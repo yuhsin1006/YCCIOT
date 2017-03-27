@@ -20,8 +20,8 @@ rp(options)
         // POST succeeded...
         console.log("POST successed!");
         console.log("Succeeded with status %d", response.statusCode);
-     //   var info = JSON.parse(response);
-        console.log(response.result);
+      //  var info = JSON.parse(response);
+        console.log(response);
 
     })
     .catch(function (err) {
@@ -40,43 +40,37 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json())
 
 var options = {
+
+ method: 'POST',
   url: 'http://120.107.172.236:3000/devices',
   headers: {
     'User-Agent': 'request',
-   'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json'
+  },
+   body: {
+        serial : '87' ,
+        mac : '12',
+        belongTo : 'yuhsin'
+  },
+  json: true
 };
  
  var request = require('request');
-
-    var aaa = {
-        serial : '87',
-        mac : '12' ,
-        belongTo : 'yuhsin'
-    }
-    var json = JSON.stringify(aaa);
-
-   // request.setHeader('Content-Type', 'application/json');
-  //  request.send(json);
 
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
 
     console.log(body);
- //   console.log(response.body);
+    console.log(response.body);
 
-    //response.setHeader('Content-Type', 'application/json');
-    //response.setContentType("application/json");
-   // response.set({ 'content-type': 'application/json;charset=utf-8' })
-
-  //  var info = JSON.parse(body);
+ //   var info = JSON.parse(body);
+//    console.log(info);
   //  console.log(info.result + " result ");
- //   console.log(info.message + " msgs ");
+  //  console.log(info.message + " msgs ");
 
       console.log(response.statusCode)
       console.log(response.headers['content-type'])
       console.dir(response.toJSON())
-      
   }
 }
  
