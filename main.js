@@ -11,44 +11,56 @@
 // upnp port forwarding
 //let upnp = require('./utilities/upnp.js')
 // express libaraies
-let express = require('express')
-let app = express()
+let express = require('express');
+let app = express();
 // bodyParser
-let bodyParser = require('body-parser')
+let bodyParser = require('body-parser');
 // include routers
-let userSignup = require('./routers/userSignup.js')
-let authentication = require('./routers/authentication.js')
-let deviceRegisteration = require('./routers/deviceRegisteration.js')
-let getDeviceInfo = require('./routers/getDeviceInfo.js')
-let receiveDeviceInfo = require('./routers/receiveDeviceInfo.js')
+let lightSwitch = require('./routers/lightSwitch.js');
 
 
 // use body-parser to parse body to json format
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 
-/* routing definitions */
-// to login page
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname + '/public/login.html'))
-})
-// handle sign up process from user
-app.use('/userSignup', userSignup)
-// user login authentication
-app.use('/auth', authentication)
-// route that devices will automatically connect and reqister their current ip:port
-app.use('/deviceReg', deviceRegisteration)
-// get device information
-app.use('/getDeviceInfo', getDeviceInfo)
-// receive device information
-app.use('/devices', receiveDeviceInfo)
+/* routing */
+app.use('/lightSwitch', lightSwitch);
+
+
 
 
 app.use((err, req, res, next) => {
-    console.log(err.stack)
-    res.sendStatus(500)
+    console.log(err.stack);
+    res.sendStatus(500);
 })
 
 app.listen(3000, () => {
-    console.log('App listening on port 3000.\n')
+    console.log('App listening on port 3000.\n');
 })
+
+
+
+/*
+    $(document).ready(function () {
+    $("#SendToPi").click(function () {
+        var Bright = $("#bright").val();
+        var OnOff = $('#I_O option:checked').val();
+        var arr = { IO: OnOff, light: Bright };
+        $.ajax   //傳帳號密碼的json給sever
+        ({
+            url: 'http://127.0.0.1:3000/',
+                    type: 'POST',
+                    data: JSON.stringify(arr),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    async: false,
+                    success: function (responseData) {      
+                    },
+                    error: function () {                  //error:沒有連上sever
+                        navigator.notification.alert("connect fail");
+                        alert("connect fail");
+                    }
+       });
+    })
+})
+*/
