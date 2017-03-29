@@ -61,16 +61,15 @@ function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
 
     console.log(body);
-    console.log(response.body);
+  //  console.log(response.body);
 
- //   var info = JSON.parse(body);
+  //  var info = JSON.parse(body);
 //    console.log(info);
   //  console.log(info.result + " result ");
   //  console.log(info.message + " msgs ");
-
       console.log(response.statusCode)
       console.log(response.headers['content-type'])
-      console.dir(response.toJSON())
+  //    console.dir(response.toJSON())
   }
 }
  
