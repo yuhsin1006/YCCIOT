@@ -15,9 +15,12 @@ let express = require('express');
 let app = express();
 // bodyParser
 let bodyParser = require('body-parser');
+
+
 // include routers
 let lightSwitch = require('./routers/lightSwitch.js');
-
+// Receive light settings from mobile
+let Receivelight = require('./routers/receivelight.js');
 
 // use body-parser to parse body to json format
 app.use(bodyParser.json());
@@ -25,8 +28,8 @@ app.use(bodyParser.json());
 
 /* routing */
 app.use('/lightSwitch', lightSwitch);
-
-
+//Receive light settings
+app.use('/Receivelight', Receivelight);
 
 
 app.use((err, req, res, next) => {
