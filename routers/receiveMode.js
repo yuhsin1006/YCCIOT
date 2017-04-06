@@ -1,20 +1,18 @@
 
-
 let express = require('express');
 let router = express.Router();
 
-let Brightness;
-
+let Mode;
 router.use('/', (req, res) => {
 
     let info = req.body;
-    console.log( "Brightness : " + info.light); 
-    
+    console.log( "Mode : " + info.Mode); 
+
     let rsp = {
       success : 1
     }
 
-    Brightness = info.light;
+    Mode = info.Mode;
     // send json response
     res.status(201).json(rsp);
 });

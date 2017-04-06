@@ -21,16 +21,22 @@ let bodyParser = require('body-parser');
 let lightSwitch = require('./routers/lightSwitch.js');
 // Receive light settings from mobile
 let Receivelight = require('./routers/receivelight.js');
+let ReceiveIO = require('./routers/receiveIO.js');
+let ReceiveMode = require('./routers/receiveMode.js');
 
 // use body-parser to parse body to json format
 app.use(bodyParser.json());
 
-
 /* routing */
 app.use('/lightSwitch', lightSwitch);
-//Receive light settings
+//Receive Brightness 0~100
 app.use('/Receivelight', Receivelight);
+//Receive lightswitch 0:off 1:on
+app.use('/ReceiveIO', ReceiveIO);
+//Receive lightmode 1~4
+app.use('/ReceiveMode', ReceiveMode);
 
+console.log("MAIN: " + Receivelight.Brightness);
 
 app.use((err, req, res, next) => {
     console.log(err.stack);
