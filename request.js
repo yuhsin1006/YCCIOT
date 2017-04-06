@@ -23,9 +23,9 @@ var options = {
   json: true
 };
  
- var request = require('request');
+ //var request = require('request');
 
-var request = require('request-promise-native')
+//var request = require('request-promise-native')
 var cron = require('cron');
 
 var cronJob = cron.job("0 * * * * *", function(){

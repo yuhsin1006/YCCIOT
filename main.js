@@ -15,7 +15,8 @@ let express = require('express');
 let app = express();
 // bodyParser
 let bodyParser = require('body-parser');
-
+let request = require('request');
+let cron = require('cron');
 
 // include routers
 let lightSwitch = require('./routers/lightSwitch.js');
@@ -36,7 +37,41 @@ app.use('/ReceiveIO', ReceiveIO);
 //Receive lightmode 1~4
 app.use('/ReceiveMode', ReceiveMode);
 
-console.log("MAIN: " + Receivelight.Brightness);
+
+
+
+/************ scheduled send request to server ******************/
+let options = {
+
+ method: 'POST',
+  url: 'http://120.107.172.236:3000/devices',
+  headers: {
+    'User-Agent': 'request',
+    'Content-Type': 'application/json'
+  },
+   body: {
+        serial : '87' ,
+        mac : '12',
+        belongTo : 'yuhsin'
+  },
+  json: true
+};
+
+let cronJob = cron.job("0 * * * * *", function(){
+    // perform operation e.g. GET request http.get() etc.
+
+    function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+        console.log(" Result: " + body.result);
+        console.log(" Message:  " + body.message); 
+        }
+    }
+    request(options, callback);
+    console.info('cron job completed');
+}); 
+cronJob.start();
+/************ scheduled send request to server ******************/
+
 
 app.use((err, req, res, next) => {
     console.log(err.stack);

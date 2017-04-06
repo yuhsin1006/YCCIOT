@@ -1,18 +1,18 @@
 
 let express = require('express');
 let router = express.Router();
+let db = require('../utilities/database.js');
+d = new db();
 
-let Mode;
 router.use('/', (req, res) => {
-
+    
     let info = req.body;
-    console.log( "Mode : " + info.Mode); 
-
+   // console.log( "Mode : " + info.Mode); 
     let rsp = {
       success : 1
     }
 
-    Mode = info.Mode;
+    d.setMode(info.Mode);
     // send json response
     res.status(201).json(rsp);
 });
