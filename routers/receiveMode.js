@@ -1,18 +1,22 @@
 
 let express = require('express');
 let router = express.Router();
-let db = require('../utilities/database.js');
-d = new db();
+let ls = require('../utilities/FileStream.js');
+let Mode = ls.getMode();
 
 router.use('/', (req, res) => {
     
     let info = req.body;
-   // console.log( "Mode : " + info.Mode); 
+    console.log( "Mode : " + info.Mode); 
     let rsp = {
       success : 1
     }
 
-    d.setMode(info.Mode);
+    if(info.Mode != Mode){
+      Mode = info.Mode;
+      ls.setMode(Mode);
+    }
+
     // send json response
     res.status(201).json(rsp);
 });

@@ -18,6 +18,7 @@ let bodyParser = require('body-parser');
 let request = require('request');
 let cron = require('cron');
 
+let ls = require('./utilities/FileStream.js');
 // include routers
 let lightSwitch = require('./routers/lightSwitch.js');
 // Receive light settings from mobile
@@ -27,6 +28,8 @@ let ReceiveMode = require('./routers/receiveMode.js');
 
 // use body-parser to parse body to json format
 app.use(bodyParser.json());
+
+ls.readlightSetting();
 
 /* routing */
 app.use('/lightSwitch', lightSwitch);
@@ -56,7 +59,7 @@ let options = {
   },
   json: true
 };
-
+//send request every minute to server
 let cronJob = cron.job("0 * * * * *", function(){
     // perform operation e.g. GET request http.get() etc.
 
@@ -69,7 +72,7 @@ let cronJob = cron.job("0 * * * * *", function(){
     request(options, callback);
     console.info('cron job completed');
 }); 
-cronJob.start();
+//cronJob.start();
 /************ scheduled send request to server ******************/
 
 

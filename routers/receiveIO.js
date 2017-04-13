@@ -1,18 +1,22 @@
 
 let express = require('express');
 let router = express.Router();
-let db = require('../utilities/database.js');
-d = new db();
+let ls = require('../utilities/FileStream.js');
+let IO = ls.getIO();
 
 router.use('/', (req, res) => {
     
     let info = req.body;
-  //  console.log( "The switch is " + info.IO); 
+    console.log( "The switch is " + info.IO); 
     let rsp = {
       success : 1
     }
 
-    d.setIO(info.IO);
+    if(info.IO != IO){
+      IO = info.IO;
+      ls.setIO(IO);
+    }
+
     // send json response
     res.status(201).json(rsp);
 });
