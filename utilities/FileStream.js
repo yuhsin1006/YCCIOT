@@ -1,10 +1,13 @@
 //Receive every changes to Brightness, IO switch or Mode from mobile
 //and printout
 let fs= require('fs');
+var gpio = require('pi-gpio');
+
 
 	let Brightness ;
     let IO ;
     let Mode ;
+let pin = 11;
 
 function readlightSetting(){
 
@@ -30,6 +33,36 @@ fs.readFile(__dirname + '/lightControl.txt', 'utf-8', function(err, data){
 });
 
 }
+
+function initialLight(){
+
+	gpio.open(pin, "output", function(err) {
+		gpio.write(pin, IO, function() {
+	        
+	    });
+	});
+
+}
+
+
+function writeHigh(pin){
+	console.log(pin + " high");
+	gpio.open(pin, "output", function(err) {
+	    gpio.write(pin, 1, function() {
+	        gpio.close(pin);
+	    });
+	});
+}
+
+function writeLow(pin){
+	console.log(pin + " low");
+		gpio.open(pin, "output", function(err) {
+	    gpio.write(pin, 0, function() {
+	        gpio.close(pin);
+	    });
+	});
+}
+
 
 function setBrightness(B){
 	Brightness = B; 
@@ -79,6 +112,7 @@ function write() {
 
 module.exports = {
 	readlightSetting: readlightSetting,
+	initialLight: initialLight,
 	getBrightness: getBrightness,
 	getIO: getIO,
 	getMode: getMode,

@@ -30,7 +30,7 @@ let ReceiveMode = require('./routers/receiveMode.js');
 app.use(bodyParser.json());
 
 ls.readlightSetting();
-
+ls.initialLight();
 /* routing */
 app.use('/lightSwitch', lightSwitch);
 //Receive Brightness 0~100
@@ -55,24 +55,27 @@ let options = {
    body: {
         serial : '87' ,
         mac : '12',
-        belongTo : 'yuhsin'
+    //    belongTo : 'yuhsin'
   },
   json: true
 };
+
+
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(" Result: " + body.result);
+        console.log(" Message:  " + body.message); 
+    }
+}
+
 //send request every minute to server
 let cronJob = cron.job("0 * * * * *", function(){
     // perform operation e.g. GET request http.get() etc.
 
-    function callback(error, response, body) {
-        if (!error && response.statusCode == 200) {
-        console.log(" Result: " + body.result);
-        console.log(" Message:  " + body.message); 
-        }
-    }
     request(options, callback);
     console.info('cron job completed');
 }); 
-//cronJob.start();
+cronJob.start();
 /************ scheduled send request to server ******************/
 
 
@@ -85,29 +88,3 @@ app.listen(3000, () => {
     console.log('App listening on port 3000.\n');
 })
 
-
-
-/*
-    $(document).ready(function () {
-    $("#SendToPi").click(function () {
-        var Bright = $("#bright").val();
-        var OnOff = $('#I_O option:checked').val();
-        var arr = { IO: OnOff, light: Bright };
-        $.ajax   //傳帳號密碼的json給sever
-        ({
-            url: 'http://127.0.0.1:3000/',
-                    type: 'POST',
-                    data: JSON.stringify(arr),
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    async: false,
-                    success: function (responseData) {      
-                    },
-                    error: function () {                  //error:沒有連上sever
-                        navigator.notification.alert("connect fail");
-                        alert("connect fail");
-                    }
-       });
-    })
-})
-*/

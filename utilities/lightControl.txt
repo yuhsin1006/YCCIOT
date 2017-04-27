@@ -1,1 +1,1 @@
-{"Brightness":"84","IO":"1","Mode":"2"}
+{"Brightness":"60","IO":"1","Mode":"1"}
