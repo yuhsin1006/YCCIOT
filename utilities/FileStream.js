@@ -41,12 +41,12 @@ fs.readFile(__dirname + '/lightControl.txt', 'utf-8', function(err, data){
 function initialLight(){
 
 	gpio.open(pin, "output", function(err) {
-		gpio.write(pin, IO, function() {
-
+	    gpio.write(pin, IO, function() {
+	        gpio.close(pin);
 	    });
 	});
 
-	led.write((Brightness/100).toFixed(2)); // 50% Duty Cycle, aka half brightness
+	led.write(Brightness/100); // 50% Duty Cycle, aka half brightness
 
 }
 
@@ -72,7 +72,7 @@ function writeLow(pin){
 
 function setBrightness(B){
 	Brightness = B; 
-	led.write((Brightness/100).toFixed(2));
+	led.write(Brightness/100);
 	write();
 }
 
