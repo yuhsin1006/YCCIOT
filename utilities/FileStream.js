@@ -2,12 +2,16 @@
 //and printout
 let fs= require('fs');
 var gpio = require('pi-gpio');
+const raspi = require('raspi');
+const pwm = require('raspi-pwm');
 
 
 	let Brightness ;
     let IO ;
     let Mode ;
-let pin = 11;
+
+let pin = 12;
+const led = new pwm.PWM('P1-12');
 
 function readlightSetting(){
 
@@ -38,9 +42,11 @@ function initialLight(){
 
 	gpio.open(pin, "output", function(err) {
 		gpio.write(pin, IO, function() {
-	        
+
 	    });
 	});
+
+	led.write((Brightness/100).toFixed(2)); // 50% Duty Cycle, aka half brightness
 
 }
 
@@ -66,11 +72,14 @@ function writeLow(pin){
 
 function setBrightness(B){
 	Brightness = B; 
+	led.write((Brightness/100).toFixed(2));
 	write();
 }
 
 function setIO(I){
 	IO = I; 
+	gpio.write(pin, IO, function() {
+	});
 	write();
 }
 
