@@ -1,17 +1,15 @@
 //Receive every changes to Brightness, IO switch or Mode from mobile
 //and printout
 let fs= require('fs');
-var gpio = require('pi-gpio');
-const raspi = require('raspi');
-const pwm = require('raspi-pwm');
-
+let raspi = require('raspi');
+let pwm = require('raspi-pwm');
+let led = new pwm.PWM('P1-12');
 
 	let Brightness ;
     let IO ;
     let Mode ;
 
 let pin = 12;
-const led = new pwm.PWM('P1-12');
 
 function readlightSetting(){
 
@@ -40,46 +38,32 @@ fs.readFile(__dirname + '/lightControl.txt', 'utf-8', function(err, data){
 
 function initialLight(){
 
-	gpio.open(pin, "output", function(err) {
-	    gpio.write(pin, IO, function() {
-	        gpio.close(pin);
-	    });
-	});
-
-	led.write(Brightness/100); // 50% Duty Cycle, aka half brightness
-
+	setTimeout(function(){
+		if(IO == 1){
+			led.write(Brightness/100);
+		}
+		else{
+			led.write(0);
+		}
+	},200);
 }
-
-
-function writeHigh(pin){
-	console.log(pin + " high");
-	gpio.open(pin, "output", function(err) {
-	    gpio.write(pin, 1, function() {
-	        gpio.close(pin);
-	    });
-	});
-}
-
-function writeLow(pin){
-	console.log(pin + " low");
-		gpio.open(pin, "output", function(err) {
-	    gpio.write(pin, 0, function() {
-	        gpio.close(pin);
-	    });
-	});
-}
-
 
 function setBrightness(B){
 	Brightness = B; 
-	led.write(Brightness/100);
+	if(IO == 1){
+		led.write(Brightness/100);
+	}
 	write();
 }
 
 function setIO(I){
 	IO = I; 
-	gpio.write(pin, IO, function() {
-	});
+	if(IO == 1){
+		led.write(Brightness/100);
+	}
+	else{
+		led.write(0);
+	}
 	write();
 }
 
