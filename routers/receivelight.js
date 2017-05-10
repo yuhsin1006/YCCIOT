@@ -25,3 +25,15 @@ router.use('/', (req, res) => {
 
 
 module.exports = router;
+
+/*
+    let json = {
+      Brightness : 80,
+      IO : 1,
+      Mode : 2
+    }
+
+    res.status(201).json(json);
+
+    */
+   // let data = JSON.stringify(json);

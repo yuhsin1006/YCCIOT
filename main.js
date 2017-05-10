@@ -25,6 +25,7 @@ let lightSwitch = require('./routers/lightSwitch.js');
 let Receivelight = require('./routers/receivelight.js');
 let ReceiveIO = require('./routers/receiveIO.js');
 let ReceiveMode = require('./routers/receiveMode.js');
+let SetDefault = require('./routers/SetDefault.js');
 
 // use body-parser to parse body to json format
 app.use(bodyParser.json());
@@ -39,6 +40,8 @@ app.use('/Receivelight', Receivelight);
 app.use('/ReceiveIO', ReceiveIO);
 //Receive lightmode 1~4
 app.use('/ReceiveMode', ReceiveMode);
+//Receive Mobile is online
+app.use('/SetDefault', SetDefault);
 
 
 
