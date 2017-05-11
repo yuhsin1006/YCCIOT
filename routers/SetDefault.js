@@ -12,11 +12,11 @@ router.use('/', (req, res) => {
     i = ls.getIO();
     m = ls.getMode();
 
-    let def = {
+    let def = [{
       Brightness: b,
-      IO = i,
-      Mode = m
-    }
+      IO : i,
+      Mode : m
+    }]
 
     // send json response
     res.status(201).json(def);
