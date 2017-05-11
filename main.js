@@ -18,6 +18,11 @@ let bodyParser = require('body-parser');
 let request = require('request');
 let cron = require('cron');
 
+//let upnp = require('./utilities/upnp.js');
+//upnp.portMapping(86400);
+
+let upmp = require('./utilities/UPMP.js');
+
 let ls = require('./utilities/FileStream.js');
 // include routers
 let lightSwitch = require('./routers/lightSwitch.js');
@@ -78,7 +83,7 @@ let cronJob = cron.job("0 * * * * *", function(){
     request(options, callback);
     console.info('cron job completed');
 }); 
-cronJob.start();
+//cronJob.start();
 /************ scheduled send request to server ******************/
 
 
