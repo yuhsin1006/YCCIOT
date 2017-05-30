@@ -7,14 +7,17 @@
 
 function setTemperature(T){
 	Temperature = T; 
+	console.log("Temperature: " + T);
 }
 
 function setHumidity(H){
 	Humidity = H; 
+	console.log("Humidity: " + H);
 }
 
 function setLightness(L){
 	Lightness = L; 
+	console.log("Lightness: " + L);
 }
 
 function getTemperature(){

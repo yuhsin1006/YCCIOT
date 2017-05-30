@@ -32,6 +32,7 @@ let ReceiveIO = require('./routers/receiveIO.js');
 let ReceiveMode = require('./routers/receiveMode.js');
 let SetDefault = require('./routers/SetDefault.js');
 let receiveArduino = require('./routers/receiveArduino.js');
+let sentTHL = require('./routers/sentTHL.js');
 // use body-parser to parse body to json format
 app.use(bodyParser.json());
 
@@ -47,6 +48,7 @@ app.use('/ReceiveIO', ReceiveIO);
 app.use('/ReceiveMode', ReceiveMode);
 //Receive Mobile is online
 app.use('/SetDefault', SetDefault);
+app.use('/sentTHL', sentTHL);
 
 
 
