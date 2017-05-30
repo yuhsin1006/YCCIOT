@@ -63,12 +63,26 @@ WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withou
           }
       }
       if(info == 4){
-          ls.setBrightness(B+10);
-          console.log( "Brightness : " + B+10); 
+          if(B < 90){
+            ls.setBrightness(B+10);
+            console.log( "Brightness : " + (B+10)); 
+          }
+          else if( B > 90 && B < 101 ){
+            ls.setBrightness(100);
+            console.log( "Brightness : 100 " ); 
+          }
+
       }
       if(info == 6){
-          ls.setBrightness(B-10);
-          console.log( "Brightness : " + B-10); 
+          if(B > 10 ){
+            ls.setBrightness(B+10);
+            console.log( "Brightness : " + (B+10)); 
+          }
+          if( B < 10 && B >= 0 ){
+            ls.setBrightness(0);
+            console.log( "Brightness : 0 " ); 
+          }
+
       }
   }
   if(which == 5){
