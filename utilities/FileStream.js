@@ -13,26 +13,26 @@ let pin = 12;
 
 function readlightSetting(){
 
-fs.readFile(__dirname + '/lightControl.txt', 'utf-8', function(err, data){
+	fs.readFile(__dirname + '/lightControl.txt', 'utf-8', function(err, data){
      //若有錯誤就列印訊息
-     if (err) {
-          console.error(err);
-     } else {
+     	if (err) {
+          	console.error(err);
+     	} else {
 
           //將檔案內容輸入
         //  console.log(data);
-          let temp = JSON.parse(data);
+          	let temp = JSON.parse(data);
 		  
-          console.log("Brightness : " + temp.Brightness);
-		  console.log("IO : " + temp.IO);
-		  console.log("Mode : " + temp.Mode);
+         	console.log("Brightness : " + temp.Brightness);
+		  	console.log("IO : " + temp.IO);
+		 	console.log("Mode : " + temp.Mode);
 
-		  Brightness = temp.Brightness;
-		  IO = temp.IO;
-		  Mode = temp.Mode;
-     }
+		  	Brightness = temp.Brightness;
+		  	IO = temp.IO;
+		  	Mode = temp.Mode;
+     	}
 
-});
+	});
 
 }
 

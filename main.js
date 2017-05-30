@@ -21,7 +21,7 @@ let cron = require('cron');
 //let upnp = require('./utilities/upnp.js');
 //upnp.portMapping(86400);
 
-let upmp = require('./utilities/UPMP.js');
+let upnp = require('./utilities/UPNP.js');
 
 let ls = require('./utilities/FileStream.js');
 // include routers
@@ -31,7 +31,7 @@ let Receivelight = require('./routers/receivelight.js');
 let ReceiveIO = require('./routers/receiveIO.js');
 let ReceiveMode = require('./routers/receiveMode.js');
 let SetDefault = require('./routers/SetDefault.js');
-
+let receiveArduino = require('./routers/receiveArduino.js');
 // use body-parser to parse body to json format
 app.use(bodyParser.json());
 
@@ -63,6 +63,9 @@ let options = {
    body: {
         serial : '87' ,
         mac : '12',
+        //0:no upnp, 1:with upnp
+        upnp: '1',
+        IpAddress: ''
     //    belongTo : 'yuhsin'
   },
   json: true

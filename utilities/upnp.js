@@ -1,45 +1,43 @@
 
-'use strict'
+//let express = require('express');
+//let router = express.Router();
 
- require('timers');
-var natUpnp = require('nat-upnp');
-var client = natUpnp.createClient();
+var natpmp = require('nat-pmp');
 
-
-// keep request the router to make sure the mapping is alive
-function portMapping (ttl) {
-
-    var config = {
-        public: 6666,
-        private: 3000,
-        ttl: ttl
-    };
+// create a "client" instance connecting to your local gateway
+var client = natpmp.connect('192.168.0.1');
 
 
-    setTimeout(function(){ (client.portMapping(config , function (err) {
-        // Will be called once finished
-        if(err){
-            console.log(err);
-            console.log('[Warning: UPnP port mapping failed]\n');
-        }else{
-            console.log('Request for port mapping valids for ' + ttl + ' seconds');
-        }
+// explicitly ask for the current external IP address
+client.externalIp(function (err, info) {
+  if (err) throw err;
+  console.log('Current external IP address: %s', info.ip.join('.'));
+});
 
-    }) ); }, (ttl-1) * 1000);
-/*
-    setTimeout(client.portMapping(config , function (err) {
-        // Will be called once finished
-        if(err){
-            console.log(err);
-            console.log('[Warning: UPnP port mapping failed]\n');
-        }else{
-            console.log('Request for port mapping valids for ' + ttl + ' seconds');
-        }
-    }), (ttl-1) * 1000);
 
-    */
-}
+// setup a new port mapping
+client.portMapping({ private: 3000, public: 3000, ttl: 3600 }, function (err, info) {
+  if (err) throw err;
+  console.log(info);
+  // {
+  //   type: 'tcp',
+  //   epoch: 8922109,
+  //   private: 22,
+  //   public: 2222,
+  //   ...
+  // }
+});
 
-module.exports = {
-	portMapping: portMapping 
-};
+client.portMapping({ private: 9000, public: 9000, ttl: 3600 }, function (err, info) {
+  if (err) throw err;
+  console.log(info);
+  // {
+  //   type: 'tcp',
+  //   epoch: 8922109,
+  //   private: 22,
+  //   public: 2222,
+  //   ...
+  // }
+});
+
+//module.exports = router;
