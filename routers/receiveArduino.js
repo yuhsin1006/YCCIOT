@@ -1,13 +1,16 @@
 var util = require('util');
 
 var bleno = require('../node_modules/bleno/index.js');
-
+let ls = require('../utilities/lightset.js');
+let thl = require('../utilities/thl.js');
 
 var BlenoPrimaryService = bleno.PrimaryService;
 var BlenoCharacteristic = bleno.Characteristic;
 var BlenoDescriptor = bleno.Descriptor;
 
 console.log('bleno');
+
+let temp;
 
 /*write characteristic arduino 101 send data to raspberry pi*/
 var WriteOnlyCharacteristic = function() {
@@ -19,8 +22,47 @@ var WriteOnlyCharacteristic = function() {
 
 util.inherits(WriteOnlyCharacteristic, BlenoCharacteristic);
 
-WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {
-  console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);//30:turn on the light 34:increase brightness 36:decrease brightness
+WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {              
+  //01:Temperature, 02:Humidity, 03:Lightness, 04:control //30:turn on the light 34:increase brightness 36:decrease brightness
+  console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);
+  temp = data.toString('hex');
+  console.log(temp);
+  let len = temp.length;
+  let i,which;
+  let info = '';
+
+  for(i=0;i<length-2;i++){
+    info = info + temp.substring(i/2+1,i/2+2);
+  }
+  which = temp.substring(length-1,length);
+
+  console.log('//// ' + which + ' ' + info);
+
+
+  if(which == 1){
+    thl.setTemperature(info);
+  }
+  if(which == 2){
+    thl.setHumidity(info);
+  }
+  if(which == 3){
+    thl.setLightness(info);
+  }
+  if(which == 4){
+    let IO = ls.getIO();
+    let B = ls.getBrightness();
+    if(info == 30){
+       if(IO == 0) ls.setIO(1);
+       else ls.setIO(0);
+    }
+    if(info == 34){
+       ls.setBrightness(B+5);
+    }
+    if(info == 36){
+       ls.setBrightness(B-5);
+    }
+  }
+
   callback(this.RESULT_SUCCESS);
 };
 

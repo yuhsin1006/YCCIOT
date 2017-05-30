@@ -31,7 +31,7 @@ let Receivelight = require('./routers/receivelight.js');
 let ReceiveIO = require('./routers/receiveIO.js');
 let ReceiveMode = require('./routers/receiveMode.js');
 let SetDefault = require('./routers/SetDefault.js');
-//let receiveArduino = require('./routers/receiveArduino.js');
+let receiveArduino = require('./routers/receiveArduino.js');
 // use body-parser to parse body to json format
 app.use(bodyParser.json());
 
