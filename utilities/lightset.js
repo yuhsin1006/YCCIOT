@@ -5,8 +5,6 @@ let raspi = require('raspi');
 let pwm = require('raspi-pwm');
 let led = new pwm.PWM('P1-12');
 let one = new pwm.PWM('P1-33');
-let two = new pwm.PWM('P1-32');
-let three = new pwm.PWM('P1-35');
 
 	let Brightness ;
     let IO ;
@@ -44,33 +42,23 @@ function initialLight(){
 			if(Mode == 1){
 				led.write(Brightness/100);
 				one.write(0);
-				two.write(0);
-				three.write(0);
 			}
 			if(Mode == 2){
 				led.write(0);
 				one.write(Brightness/100);
-				two.write(0);
-				three.write(0);
 			}
 			if(Mode == 3){
-				led.write(0);
-				one.write(0);
-				two.write(Brightness/100);
-				three.write(0);
+				led.write(Brightness/100);
+				one.write(Brightness/100);
 			}
 			if(Mode == 4){
-				led.write(0);
-				one.write(0);
-				two.write(0);
-				three.write(Brightness/100);
+				led.write(0.2);
+				one.write(0.8);
 			}
 	}
 	else{
 		led.write(0);
 		one.write(0);
-		two.write(0);
-		three.write(0);
 	}
 	},200);
 }
@@ -81,33 +69,23 @@ function setBrightness(B){
 			if(Mode == 1){
 				led.write(Brightness/100);
 				one.write(0);
-				two.write(0);
-				three.write(0);
 			}
 			if(Mode == 2){
 				led.write(0);
 				one.write(Brightness/100);
-				two.write(0);
-				three.write(0);
 			}
 			if(Mode == 3){
-				led.write(0);
-				one.write(0);
-				two.write(Brightness/100);
-				three.write(0);
+				led.write(Brightness/100);
+				one.write(Brightness/100);
 			}
 			if(Mode == 4){
-				led.write(0);
-				one.write(0);
-				two.write(0);
-				three.write(Brightness/100);
+				led.write(0.2);
+				one.write(0.8);
 			}
 	}
 	else{
 		led.write(0);
 		one.write(0);
-		two.write(0);
-		three.write(0);
 	}
 	write();
 }
@@ -118,33 +96,23 @@ function setIO(I){
 			if(Mode == 1){
 				led.write(Brightness/100);
 				one.write(0);
-				two.write(0);
-				three.write(0);
 			}
 			if(Mode == 2){
 				led.write(0);
 				one.write(Brightness/100);
-				two.write(0);
-				three.write(0);
 			}
 			if(Mode == 3){
-				led.write(0);
-				one.write(0);
-				two.write(Brightness/100);
-				three.write(0);
+				led.write(Brightness/100);
+				one.write(Brightness/100);
 			}
 			if(Mode == 4){
-				led.write(0);
-				one.write(0);
-				two.write(0);
-				three.write(Brightness/100);
+				led.write(0.2);
+				one.write(0.8);
 			}
 	}
 	else{
 		led.write(0);
 		one.write(0);
-		two.write(0);
-		three.write(0);
 	}
 	write();
 }
@@ -154,26 +122,18 @@ function setMode(M){
 	if(M == 1){
 		led.write(Brightness/100);
 		one.write(0);
-		two.write(0);
-		three.write(0);
 	}
 	if(M == 2){
 		led.write(0);
 		one.write(Brightness/100);
-		two.write(0);
-		three.write(0);
 	}
 	if(M == 3){
-		led.write(0);
-		one.write(0);
-		two.write(Brightness/100);
-		three.write(0);
+		led.write(Brightness/100);
+		one.write(Brightness/100);
 	}
 	if(M == 4){
-		led.write(0);
-		one.write(0);
-		two.write(0);
-		three.write(Brightness/100);
+		led.write(0.2);
+		one.write(0.8);
 	}
 	write();
 }
