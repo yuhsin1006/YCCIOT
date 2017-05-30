@@ -75,8 +75,8 @@ WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withou
       }
       if(info == 6){
           if(B > 10 ){
-            ls.setBrightness(B+10);
-            console.log( "Brightness : " + (B+10)); 
+            ls.setBrightness(B-10);
+            console.log( "Brightness : " + (B-10)); 
           }
           if( B < 10 && B >= 0 ){
             ls.setBrightness(0);
