@@ -1,6 +1,6 @@
 var util = require('util');
 
-var bleno = require('./index');
+var bleno = require('../node_modules/bleno/index.js');
 
 
 var BlenoPrimaryService = bleno.PrimaryService;
@@ -119,4 +119,3 @@ bleno.on('advertisingStop', function() {
 bleno.on('servicesSet', function(error) {
   console.log('on -> servicesSet: ' + (error ? 'error ' + error : 'success'));
 });
-
