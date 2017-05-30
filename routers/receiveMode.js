@@ -1,7 +1,7 @@
 
 let express = require('express');
 let router = express.Router();
-let ls = require('../utilities/FileStream.js');
+let ls = require('../utilities/lightset.js');
 let Mode = ls.getMode();
 
 router.use('/', (req, res) => {

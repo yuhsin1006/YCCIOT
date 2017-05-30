@@ -2,7 +2,7 @@
 
 let express = require('express');
 let router = express.Router();
-let ls = require('../utilities/FileStream.js');
+let ls = require('../utilities/lightset.js');
 let Brightness = ls.getBrightness();
 
 router.use('/', (req, res) => {
