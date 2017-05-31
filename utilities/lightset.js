@@ -1,5 +1,13 @@
-//Receive every changes to Brightness, IO switch or Mode from mobile
-//and printout
+
+/* ---------------------------------------------+
+ * FILE NAME - lightset.js                      +
+ * ---------------------------------------------+
+ * Creator : Yu-Hsin Chung                      +
+ * ---------------------------------------------+
+ * Description : Modify lightsettings           +
+ *               read/write file                +
+ * ---------------------------------------------*/
+
 let fs= require('fs');
 let raspi = require('raspi');
 let pwm = require('raspi-pwm');
