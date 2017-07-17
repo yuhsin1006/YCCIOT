@@ -1,3 +1,13 @@
+
+/* ----------------------------------------------------------+
+ * FILE NAME - receiveArduino.js                             +
+ * ----------------------------------------------------------+
+ * Creator :                                                 +
+ * ----------------------------------------------------------+
+ * Description : Receive the environment information         +
+ *               and modify the lightsettings                +
+ * ----------------------------------------------------------*/
+
 var util = require('util');
 
 var bleno = require('../node_modules/bleno/index.js');
@@ -22,11 +32,15 @@ var WriteOnlyCharacteristic = function() {
 
 util.inherits(WriteOnlyCharacteristic, BlenoCharacteristic);
 
-WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {              
-  //01:Temperature, 02:Humidity, 03:Lightness, 04:control //30:turn on the light 34:increase brightness 36:decrease brightness
+WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {     
+  //Receive the values from Arduino         
+  //01:Temperature, 02:Humidity, 03:Lightness, 40:IO switch, 44:increase Brightness, 46:decrease Brightness 
+  //51:Mode 1, 52:Mode 2, 53:Mode3, 54:Mode 4
+
  // console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);
+
+ //cut the values
   temp = data.toString('hex');
- // console.log(temp);
   let len = temp.length;
   let i,which;
   let info = '';
@@ -38,17 +52,23 @@ WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withou
   }
   which = temp.charAt(len-1);
 
-//  console.log('//// ' + which + ' ' + info);
 
+//  if receive 1, set the Temperature value to file thl.js
   if(which == 1){
     thl.setTemperature(info);
   }
+//  if receive 2, set the Humidity value to file thl.js
   if(which == 2){
     thl.setHumidity(info);
   }
+//  if receive 3, set the Lightness value to file thl.js
   if(which == 3){
     thl.setLightness(info);
   }
+
+  //if receive 40, set the IO switch
+  //if receive 44, increase the Brightness
+  //if receive 46, decrease the Brightness
   if(which == 4){
       let IO = ls.getIO();
       let B = ls.getBrightness();
@@ -85,6 +105,10 @@ WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withou
 
       }
   }
+  //if receive 51, set the Mode to 1
+  //if receive 52, set the Mode to 2
+  //if receive 53, set the Mode to 3
+  //if receive 55, set the Mode to 4
   if(which == 5){
           let Mode = ls.getMode();
           

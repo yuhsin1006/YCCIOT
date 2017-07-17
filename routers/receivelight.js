@@ -1,10 +1,19 @@
 
+/* ---------------------------------------------------------+
+ * FILE NAME - receivelight.js                              +
+ * ---------------------------------------------------------+
+ * Creator : Yu-Hsin Chung                                  +
+ * ---------------------------------------------------------+
+ * Description : Receive the Brightness value from mobile   +
+ * ---------------------------------------------------------*/
 
 let express = require('express');
 let router = express.Router();
 let ls = require('../utilities/lightset.js');
+//Get the initial Brightness value from file lightset.js
 let Brightness = ls.getBrightness();
 
+//Get the new Brightness value from mobile
 router.use('/', (req, res) => {
 
     let info = req.body;
@@ -14,6 +23,7 @@ router.use('/', (req, res) => {
       success : 1
     }
     
+    //if the Brightness value changed, reset the Brightness value, rewrite the lightset.js
     if(info.light != Brightness){
       Brightness = info.light;
       ls.setBrightness(Brightness);
@@ -25,15 +35,3 @@ router.use('/', (req, res) => {
 
 
 module.exports = router;
-
-/*
-    let json = {
-      Brightness : 80,
-      IO : 1,
-      Mode : 2
-    }
-
-    res.status(201).json(json);
-
-    */
-   // let data = JSON.stringify(json);

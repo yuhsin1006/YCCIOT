@@ -86,6 +86,14 @@ function callback(error, response, body) {
 }
 
 //send request every minute to server
+/*      TimeSet
+Seconds: 0-59
+Minutes: 0-59
+Hours: 0-23
+Day of Month: 1-31
+Months: 0-11
+Day of Week: 0-6
+*/
 let cronJob = cron.job("0 * * * * *", function(){
     // perform operation e.g. GET request http.get() etc.
 

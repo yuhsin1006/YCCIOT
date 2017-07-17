@@ -18,6 +18,7 @@ let one = new pwm.PWM('P1-33');
     let IO ;
     let Mode ;
 
+//Read lightsettings from lightControl.txt 
 function readlightSetting(){
 
 	fs.readFile(__dirname + '/lightControl.txt', 'utf-8', function(err, data){
@@ -43,9 +44,11 @@ function readlightSetting(){
 
 }
 
+//Initial Lightset
 function initialLight(){
-
+	//
 	setTimeout(function(){
+	// if IO is on, set the mode
 	if(IO == 1){
 			if(Mode == 1){
 				led.write(Brightness/100);
@@ -71,6 +74,7 @@ function initialLight(){
 	},200);
 }
 
+//if value of Brghtness changed, reset the lightsetting, and write it to the file lightControl.txt 
 function setBrightness(B){
 	Brightness = B; 
 	if(IO == 1){
@@ -98,6 +102,7 @@ function setBrightness(B){
 	write();
 }
 
+//if value of IO changed, reset the lightsetting, and write it to the file lightControl.txt 
 function setIO(I){
 	IO = I; 
 	if(IO == 1){
@@ -125,6 +130,7 @@ function setIO(I){
 	write();
 }
 
+//if value of Mode changed, reset the lightsetting, and write it to the file lightControl.txt 
 function setMode(M){
 	Mode = M; 
 	if(M == 1){
@@ -146,20 +152,22 @@ function setMode(M){
 	write();
 }
 
-
+// get the value of Brightness from other file
 function getBrightness(){
 	return Brightness; 
 }
 
+// get the value of IO from other file
 function getIO(){
 	return IO; 
 }
 
+// get the value of Mode from other file
 function getMode(){
 	return Mode; 
 }
 
-
+// write the value to the file lightControl.txt 
 function write() { 
 
     let data = {
