@@ -22,7 +22,7 @@ console.log('bleno');
 
 let temp;
 
-/*write characteristic arduino 101 send data to raspberry pi*/
+// Write Characteristic : receive the data from the remote controller 
 var WriteOnlyCharacteristic = function() {
   WriteOnlyCharacteristic.super_.call(this, {
     uuid: 'fffffffffffffffffffffffffffffff4',
@@ -134,7 +134,8 @@ WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withou
   callback(this.RESULT_SUCCESS);
 };
 
-/*Notify characteristic raspberry pi send data to arduino 101*/
+
+// Notify characteristic : raspberry pi send data to arduino 101
 var NotifyOnlyCharacteristic = function() {
   NotifyOnlyCharacteristic.super_.call(this, {
     uuid: 'fffffffffffffffffffffffffffffff5',
@@ -145,20 +146,21 @@ var NotifyOnlyCharacteristic = function() {
 util.inherits(NotifyOnlyCharacteristic, BlenoCharacteristic);
 
 
+// When the notifycharacteristic has been subscribed , run this function
 NotifyOnlyCharacteristic.prototype.onSubscribe = function(maxValueSize, updateValueCallback) {
   console.log('NotifyOnlyCharacteristic subscribe');
-
   this.counter = 0;
   this.changeInterval = setInterval(function() {
     var data = new Buffer(4);
-    data.writeUInt32LE(this.counter, 0);
+    data.writeUInt32LE(this.counter, 0);     // This function is to write value to the cetral device 
 
     console.log('NotifyOnlyCharacteristic update value: ' + this.counter);
     updateValueCallback(data);
-    this.counter++;
+    this.counter++;   
   }.bind(this), 5000);
 };
 
+// If the subscribed status become unsubscribed status
 NotifyOnlyCharacteristic.prototype.onUnsubscribe = function() {
   console.log('NotifyOnlyCharacteristic unsubscribe');
 
@@ -172,7 +174,8 @@ NotifyOnlyCharacteristic.prototype.onNotify = function() {
   console.log('NotifyOnlyCharacteristic on notify');
 };
 
-
+/* There are two characteristics in the SampleService
+   and the uuid of the SampleService if 'fffffffffffffffffffffffffffffff0'*/
 function SampleService() {
   SampleService.super_.call(this, {
     uuid: 'fffffffffffffffffffffffffffffff0',
@@ -196,23 +199,28 @@ bleno.on('stateChange', function(state) {
   }
 });
 
-// Linux only events /////////////////
-bleno.on('accept', function(clientAddress) {
-  console.log('on -> accept, client: ' + clientAddress);
 
+// Linux only events, when respberrypi connect to arduino(bleno on), print the foundation information of the connection
+
+bleno.on('accept', function(clientAddress) 
+{
+  console.log('on -> accept, client: ' + clientAddress);
   bleno.updateRssi();
 });
 
-bleno.on('rssiUpdate', function(rssi) {
+
+bleno.on('rssiUpdate', function(rssi) 
+{
   console.log('on -> rssiUpdate: ' + rssi);
 });
-//////////////////////////////////////
 
-bleno.on('mtuChange', function(mtu) {
+bleno.on('mtuChange', function(mtu) 
+{
   console.log('on -> mtuChange: ' + mtu);
 });
 
-bleno.on('advertisingStart', function(error) {
+bleno.on('advertisingStart', function(error) 
+{
   console.log('on -> advertisingStart: ' + (error ? 'error ' + error : 'success'));
 
   if (!error) {
