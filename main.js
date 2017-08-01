@@ -29,7 +29,7 @@ let ReceiveIO = require('./routers/receiveIO.js');
 let ReceiveMode = require('./routers/receiveMode.js');
 
 // Send default light setting to mobile 
-let SetDefault = require('./routers/SetDefault.js');
+let SendDefault = require('./routers/SendDefault.js');
 // Receive the sensor value from Arduino
 let receiveArduino = require('./routers/receiveArduino.js');
 // Send Temperature, Humidity, Lightness value to mobile
@@ -52,17 +52,21 @@ app.use('/ReceiveIO', ReceiveIO);
 app.use('/ReceiveMode', ReceiveMode);
 
 //Receive when mobile is online
-app.use('/SetDefault', SetDefault);
+app.use('/SendDefault', SendDefault);
 //send Temperature, Humidity, Lightness value response to mobile
 app.use('/sentTHL', sentTHL);
 
+//set server ip address
+let ip = '120.107.172.236';
+let port = '3000';
 
 /************ scheduled send request to server ******************/
 // Send it every minute
 let options = {
 
  method: 'POST',
-  url: 'http://120.107.172.236:3000/devices',
+ //************* */
+  url: ip + port +'/devices',
   headers: {
     'User-Agent': 'request',
     'Content-Type': 'application/json'
@@ -70,8 +74,7 @@ let options = {
    body: {
         serial : '87' ,
         mac : '12',
-        //0:no upnp, 1:with upnp
-  //      upnp: '1',
+
   //      IpAddress: ''
     //    belongTo : 'yuhsin'
   },
@@ -103,7 +106,7 @@ let cronJob = cron.job("0 * * * * *", function(){
 cronJob.start();
 /************ scheduled send request to server ******************/
 
-
+//****************************** */
 app.use((err, req, res, next) => {
     console.log(err.stack);
     res.sendStatus(500);

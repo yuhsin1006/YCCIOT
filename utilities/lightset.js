@@ -11,6 +11,7 @@
 let fs= require('fs');
 let raspi = require('raspi');
 let pwm = require('raspi-pwm');
+//use two pins, 12&33
 let led = new pwm.PWM('P1-12');
 let one = new pwm.PWM('P1-33');
 
@@ -22,12 +23,12 @@ let one = new pwm.PWM('P1-33');
 function readlightSetting(){
 
 	fs.readFile(__dirname + '/lightControl.txt', 'utf-8', function(err, data){
-     //若有錯誤就列印訊息
+     //if error, then print the error message
      	if (err) {
           	console.error(err);
      	} else {
 
-          //將檔案內容輸入
+          //set the data value from lightControl.txt 
         //  console.log(data);
           	let temp = JSON.parse(data);
 		  
