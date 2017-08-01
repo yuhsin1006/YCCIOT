@@ -20,8 +20,7 @@ let cron = require('cron');
 let upnp = require('./utilities/upnp.js');
 // lightsetting
 let ls = require('./utilities/lightset.js');
-// include routers
-let lightSwitch = require('./routers/lightSwitch.js');
+
 
 // Receive light settings(Brightness, IO, Mode) from mobile
 let Receivelight = require('./routers/receivelight.js');
@@ -43,7 +42,6 @@ ls.readlightSetting();
 ls.initialLight();
 
 /* routing */
-app.use('/lightSwitch', lightSwitch);
 //Receive Brightness 0~100
 app.use('/Receivelight', Receivelight);
 //Receive lightswitch 0:off 1:on
